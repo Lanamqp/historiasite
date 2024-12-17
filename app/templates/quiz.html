@@ -1,0 +1,409 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz - Núcleo de Pesquisa Brasil Anos 70</title>
+    <meta name="description" content="Teste seus conhecimentos sobre a história do Brasil nos Anos 70">
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #0A2342;      /* Deep navy blue */
+            --color-secondary: #2A4494;    /* Rich blue */
+            --color-background: #F5F5F5;   /* Light gray */
+            --color-text: #333333;         /* Dark gray */
+            --color-accent: #D9315B;       /* Vibrant accent */
+            --color-border: #CCCCCC;       /* Soft border */
+            --color-shadow: rgba(0,0,0,0.1);
+            --color-success: #2ecc71;      /* Success green */
+            --color-error: #e74c3c;        /* Error red */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Professional Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px var(--color-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: var(--color-secondary);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .navigation a:hover {
+            color: var(--color-accent);
+        }
+
+        .navigation a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content Layout */
+        main {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 40px;
+            padding: 50px 0;
+        }
+
+        .main-content {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--color-shadow);
+            padding: 40px;
+            border: 1px solid var(--color-border);
+        }
+
+        .sidebar {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--color-shadow);
+            padding: 40px;
+            border: 1px solid var(--color-border);
+        }
+
+        .section-title {
+            color: var(--color-primary);
+            border-bottom: 3px solid var(--color-accent);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: -1px;
+        }
+
+        /* Quiz Specific Styles */
+        .quiz-question {
+            margin-bottom: 30px;
+            background-color: var(--color-background);
+            padding: 25px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-question:hover {
+            box-shadow: 0 5px 15px var(--color-shadow);
+            transform: translateY(-5px);
+        }
+
+        .quiz-question p {
+            font-weight: 600;
+            color: var(--color-secondary);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .quiz-options label {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-options label:hover {
+            border-color: var(--color-accent);
+            background-color: rgba(217, 49, 91, 0.05);
+        }
+
+        .quiz-options input[type="radio"] {
+            margin-right: 15px;
+            accent-color: var(--color-accent);
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--color-secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--color-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 40px;
+            background-color: var(--color-background);
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        .quiz-result h2 {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .quiz-result .score {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+        }
+
+        .quiz-result .score.success {
+            color: var(--color-success);
+        }
+
+        .quiz-result .score.warning {
+            color: var(--color-accent);
+        }
+
+        .quiz-result .btn {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .quiz-result .btn:hover {
+            background-color: var(--color-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Sidebar Styles */
+        .sidebar-section {
+            margin-bottom: 35px;
+        }
+
+        .sidebar-section h3 {
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 10px;
+        }
+
+        .recent-posts a {
+            display: block;
+            color: var(--color-text);
+            text-decoration: none;
+            margin-bottom: 15px;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .recent-posts a::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .recent-posts a:hover {
+            color: var(--color-accent);
+            padding-left: 25px;
+        }
+
+        .recent-posts a:hover::before {
+            opacity: 1;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 1024px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .quiz-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content, 
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .navigation {
+                margin-top: 15px;
+                gap: 15px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .quiz-result h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="wrapper header-content">
+            <div class="logo">
+                <h1>Núcleo de Pesquisa: Brasil Anos 70</h1>
+            </div>
+            <nav class="navigation">
+                <a href="{% url 'index' %}">Início</a>
+                <a href="{% url 'quiz' %}">Quiz</a>
+                <a href="{% url 'admin:index' %}">Painel Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <main>
+            <div class="main-content">
+                <h2 class="section-title">Desafie seu Conhecimento Histórico</h2>
+
+                <!-- Exibição de Saudação ao Usuário -->
+                {% if user_name %}
+                    <p>Olá, {{ user_name }}! Vamos testar seus conhecimentos?</p>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    {% for quiz in quizzes %}
+                        <div class="quiz-question">
+                            <p>{{ quiz.pergunta }}</p>
+                            <div class="quiz-options">
+                                <label>
+                                    <input type="radio" name="question_{{ quiz.id }}" value="A"> {{ quiz.alternativa_a }}
+                                </label>
+                                <label>
+                                    <input type="radio" name="question_{{ quiz.id }}" value="B"> {{ quiz.alternativa_b }}
+                                </label>
+                                <label>
+                                    <input type="radio" name="question_{{ quiz.id }}" value="C"> {{ quiz.alternativa_c }}
+                                </label>
+                                <label>
+                                    <input type="radio" name="question_{{ quiz.id }}" value="D"> {{ quiz.alternativa_d }}
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="submit-btn">Enviar Respostas</button>
+                </form>
+
+                {% if score is not None %}
+                    <div class="quiz-result">
+                        <h2>Resultado do Quiz</h2>
+                        {% if user_name %}
+                            <p>Obrigado por participar, {{ user_name }}! Você acertou {{ score }} de {{ total }} questões.</p>
+                        {% else %}
+                            <p>Você acertou {{ score }} de {{ total }} questões.</p>
+                        {% endif %}
+                        <a href="{% url 'quiz' %}" class="btn">Fazer Novamente</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3>Linhas de Pesquisa</h3>
+                    <div class="recent-posts">
+                        <a href="#">Política Militar</a>
+                        <a href="#">Movimentos Culturais</a>
+                        <a href="#">Economia e Sociedade</a>
+                        <a href="#">Direitos Humanos</a>
+                    </div>
+                </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+</body>
+</html>

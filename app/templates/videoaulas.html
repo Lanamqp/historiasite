@@ -1,0 +1,323 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Núcleo de Pesquisa: Videoaulas - Brasil Anos 70</title>
+    <meta name="description" content="Videoaulas explicativas sobre o contexto histórico do Brasil durante o regime militar nos anos 70">
+    <meta name="keywords" content="Brasil, Anos 70, Videoaulas, História, Regime Militar, Documentário Educacional">
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #0A2342;
+            --color-secondary: #2A4494;
+            --color-background: #F5F5F5;
+            --color-text: #333333;
+            --color-accent: #D9315B;
+            --color-border: #CCCCCC;
+            --color-shadow: rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px var(--color-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: var(--color-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .navigation a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Video Gallery Styles */
+        .videos-title {
+            text-align: center;
+            margin: 40px 0;
+            color: var(--color-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .video-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--color-shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .video-play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-play-overlay i {
+            color: white;
+            font-size: 3rem;
+        }
+
+        .video-card:hover .video-play-overlay {
+            opacity: 1;
+        }
+
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.1);
+        }
+
+        .video-details {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-details h2 {
+            color: var(--color-secondary);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .video-details p {
+            color: var(--color-text);
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .video-link {
+            display: inline-block;
+            background-color: var(--color-secondary);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 6px;
+            align-self: flex-start;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .video-link:hover {
+            background-color: var(--color-accent);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 50px 0;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--color-accent);
+            transform: scale(1.2);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .video-gallery {
+                grid-template-columns: 1fr;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="wrapper header-content">
+            <div class="logo">
+                <h1>Núcleo de Pesquisa: Brasil Anos 70</h1>
+            </div>
+            <nav class="navigation">
+                <a href="{% url 'index' %}">Início</a>
+                <a href="{% url 'quiz' %}">Quiz</a>
+                <a href="{% url 'admin:index' %}">Painel Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <h2 class="videos-title">Arquivos em Vídeo</h2>
+        
+        <div class="video-gallery">
+            {% for video in videos %}
+                <div class="video-card">
+                    {% if video.capa_video %}
+                        <div class="video-thumbnail">
+                            <img 
+                                src="{{ video.capa_video }}" 
+                                alt="{{ video.titulo }}"
+                            >
+                            <div class="video-play-overlay">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="video-details">
+                        <h2>{{ video.titulo }}</h2>
+                        <p>{{ video.descricao }}</p>
+                        <a 
+                            href="{{ video.link }}" 
+                            target="_blank" 
+                            class="video-link"
+                        >
+                            Assistir Videoaula
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center w-full">Nenhuma videoaula disponível no momento.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <div class="wrapper footer-content">
+            <div class="footer-section">
+                <h4>Contato Institucional</h4>
+                <p>Email: comunicacao@muz.ifsuldeminas.edu.br</p>
+                <p>Telefone: (35) 3571-5051</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Localização</h4>
+                <p>Instituto Federal Campus Muzambinho</p>
+                <p>Estrada de Muzambinho, km 35 - Bairro Morro Preto</p>
+                <p>Muzambinho, MG - Brasil</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Conecte-se</h4>
+                <div class="social-icons">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

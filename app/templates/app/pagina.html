@@ -1,0 +1,381 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ pagina.nome }} - Núcleo de Pesquisa Brasil Anos 70</title>
+    <meta name="description" content="Documento de pesquisa sobre {{ pagina.nome }} no contexto histórico dos Anos 70 no Brasil">
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        :root {
+            --color-primary: #0A2342;      /* Deep navy blue */
+            --color-secondary: #2A4494;    /* Rich blue */
+            --color-background: #F5F5F5;   /* Light gray */
+            --color-text: #333333;         /* Dark gray */
+            --color-accent: #D9315B;       /* Vibrant accent */
+            --color-border: #CCCCCC;       /* Soft border */
+            --color-shadow: rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Professional Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 15px var(--color-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 30px;
+        }
+
+        .navigation a {
+            text-decoration: none;
+            color: var(--color-secondary);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .navigation a:hover {
+            color: var(--color-accent);
+        }
+
+        .navigation a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            padding: 50px 0;
+        }
+
+        .main-content {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--color-shadow);
+            padding: 40px;
+            border: 1px solid var(--color-border);
+        }
+
+        .page-header {
+            border-bottom: 3px solid var(--color-accent);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            color: var(--color-primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--color-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Content Styling */
+        .conteudo {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--color-border);
+            position: relative;
+        }
+
+        .conteudo:last-child {
+            border-bottom: none;
+        }
+
+        .conteudo h3 {
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .conteudo-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--color-text);
+            opacity: 0.7;
+        }
+
+        .conteudo img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px var(--color-shadow);
+        }
+
+        .conteudo-link {
+            display: inline-block;
+            background-color: var(--color-secondary);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .conteudo-link:hover {
+            background-color: var(--color-accent);
+        }
+
+        /* Topicos Styling */
+        .topicos-list {
+            background-color: var(--color-background);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .topicos-list h4 {
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--color-accent);
+            padding-bottom: 10px;
+        }
+
+        .topicos-list ul {
+            list-style-type: none;
+        }
+
+        .topicos-list li {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px var(--color-shadow);
+        }
+
+        .topicos-list li h5 {
+            color: var(--color-secondary);
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 50px 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 20px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--color-accent);
+            transform: scale(1.2);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .header-content, 
+            .navigation,
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .navigation {
+                margin-top: 15px;
+                gap: 15px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .conteudo-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="wrapper header-content">
+            <div class="logo">
+                <h1>Núcleo de Pesquisa: Brasil Anos 70</h1>
+            </div>
+            <nav class="navigation">
+                <a href="{% url 'index' %}">Início</a>
+                <a href="{% url 'quiz' %}">Quiz</a>
+                <a href="{% url 'admin:index' %}">Painel Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="wrapper">
+        <main>
+            <div class="main-content">
+                {% if pagina.imagem %}
+                    <img src="{{ pagina.imagem.url }}" alt="{{ pagina.nome }}" style="max-width: 100%; height: auto; border-radius: 12px; margin-bottom: 30px;">
+                {% endif %}
+        
+                <div class="page-header">
+                    <h1>{{ pagina.nome }}</h1>
+                    <p>{{ pagina.descricao }}</p>
+                </div>
+        
+                <section>
+                    <h2 class="section-title" style="color: var(--color-primary); border-bottom: 2px solid var(--color-accent); padding-bottom: 10px; margin-bottom: 20px;">Conteúdos</h2>
+                    
+                    {% for conteudo in conteudos %}
+                        <div class="conteudo">
+                            <h3>{{ conteudo.titulo }}</h3>
+                            
+                            <div class="conteudo-meta">
+                                <span><strong>Publicado em:</strong> {{ conteudo.data_publicacao|date:"d/m/Y" }}</span>
+                                <span><strong>Categoria:</strong> {{ conteudo.categoria.nome }}</span>
+                                <span><strong>Subcategoria:</strong> {{ conteudo.subcategoria.nome }}</span>
+                            </div>
+                            
+                            <p>{{ conteudo.descricao }}</p>
+        
+                            {% if conteudo.imagem %}
+                                <img src="{{ conteudo.imagem.url }}" alt="{{ conteudo.titulo }}">
+                            {% endif %}
+        
+                            {% if conteudo.link %}
+                                <a href="{{ conteudo.link }}" target="_blank" class="conteudo-link">Saiba Mais</a>
+                            {% endif %}
+        
+                            {% if conteudo.topicos.all %}
+                                <div class="topicos-list">
+                                    <h4>Tópicos Relacionados</h4>
+                                    <ul>
+                                        {% for topico in conteudo.topicos.all %}
+                                            <li>
+                                                <h5>{{ topico.titulo }}</h5>
+                                                <p>{{ topico.texto }}</p>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <p style="font-style: italic; color: var(--color-secondary);">Não há tópicos adicionais para este conteúdo.</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </section>
+            </div>
+        </main>        
+    </div>
+
+    <footer>
+        <div class="wrapper footer-content">
+            <div class="footer-section">
+                <h4>Contato Institucional</h4>
+                <p>Email: comunicacao@muz.ifsuldeminas.edu.br.</p>
+                <p>Telefone: (35) 3571-5051</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Localização</h4>
+                <p>Instituto Federal Campus Muzambinho/p>
+                <p> Estrada de Muzambinho, km 35 - Bairro Morro Preto</p>
+                <p>Muzambinho, MG - Brasil</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Conecte-se</h4>
+                <div class="social-icons">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
